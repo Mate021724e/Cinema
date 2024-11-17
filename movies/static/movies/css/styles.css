@@ -1,0 +1,185 @@
+/* Загальні стилі */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f4f4f4;
+  }
+  
+  h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  /* Стилі для шапки */
+  header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+  }
+  
+  header .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  nav ul {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  nav ul li {
+    margin: 0 15px;
+  }
+  
+  nav ul li a {
+    color: white;
+    font-size: 18px;
+    padding: 5px 10px;
+  }
+  
+  nav ul li a:hover {
+    background-color: #555;
+    border-radius: 5px;
+  }
+  
+  /* Герой-секція */
+  #hero {
+    text-align: center;
+    padding: 50px 20px;
+    background-color: #222;
+    color: white;
+  }
+  
+  #hero h1 {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+  
+  #hero p {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  #hero .btn {
+    background-color: #e50914;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+  }
+  
+  #hero .btn:hover {
+    background-color: #b00711;
+  }
+  
+  /* Секція фільмів */
+  #now-showing {
+    padding: 30px 20px;
+    background-color: #fff;
+  }
+  
+  .movie-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 0;
+  }
+  
+  .movie-card {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  
+  .movie-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .movie-poster {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+  }
+  
+  .movie-details {
+    padding: 10px;
+  }
+  
+  .movie-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .movie-genres {
+    font-size: 16px;
+    color: #777;
+  }
+  
+  /* Секція футера */
+  footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+  }
+  
+  footer p {
+    margin: 5px 0;
+  }
+  
+  /* Медіазапити для адаптивності */
+  @media (max-width: 768px) {
+    #hero h1 {
+      font-size: 30px;
+    }
+  
+    #hero p {
+      font-size: 18px;
+    }
+  
+    #hero .btn {
+      font-size: 16px;
+    }
+  
+    nav ul {
+      flex-direction: column;
+      margin-top: 10px;
+    }
+  
+    nav ul li {
+      margin: 5px 0;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .movie-title {
+      font-size: 16px;
+    }
+  
+    .movie-genres {
+      font-size: 14px;
+    }
+  }
+  

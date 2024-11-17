@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Theater</title>
+    <link rel="stylesheet" href="static/movies/css/styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">CinemaTime 🎬</div>
+      <nav>
+        <ul>
+          <li><a href="#now-showing">Now Showing</a></li>
+          <li><a href="#upcoming">Upcoming</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="hero">
+      <h1>Welcome to CinemaTime</h1>
+      <p>Experience the magic of movies like never before.</p>
+      <a href="#now-showing" class="btn">Browse Movies</a>
+    </section>
+
+    <section id="now-showing">
+      <h2>Now Showing</h2>
+      <div class="movies">
+        {% if movies %}
+        <ul class="movie-list">
+            {% for movie in movies %}
+            <li class="movie-card">
+                <img class="movie-poster" src="{{ movie.Poster }}" alt="{{ movie.Title }}" />
+                <div class="movie-details">
+                    <strong class="movie-title">{{ movie.Title }}</strong><br />
+                    <p class="movie-genres">Жанр: {{ movie.Genres }}</p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No movies available.</p>
+        {% endif %}
+    </div>
+    </section>
+
+    <footer id="contact">
+      <p>Contact us: support@cinematime.com | Phone: +1 (123) 456-7890</p>
+      <p>&copy; 2024 CinemaTime. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
