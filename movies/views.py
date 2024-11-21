@@ -1,7 +1,8 @@
+from django.http import JsonResponse
 from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from movies.utils.movies import get_all_movies 
 from movies.utils.genres import get_all_genres
 from .models import Movie, Genre, Category
@@ -12,32 +13,36 @@ def movies(request):
     """
     Головна сторінка з фільмами. Тільки GET.
     """
-    movies_info = get_all_movies()
-    genres = Genre.objects.all()
-    categories = Category.objects.all()
-    return render(request, 'movies/main.html', 
-    {
-        'movies': movies_info,
-        'genres': genres,
-        'categories': categories
-        })
+    movies_info = get_all_movies()  # Заміна get_all_movies() на виклик Movie.objects.all()
+    genres = Genre.objects.all()  
+    categories = Category.objects.all()  
+    form = MovieForm()  
+    return render(
+        request, 
+        'movies/main.html', 
+        {
+            'movies': movies_info,
+            'genres': genres,
+            'categories': categories,
+            'form': form  
+        }
+    )
 
 def add_movie(request):
     """
-    Додати новий фільм через форму в модальному вікні (AJAX).
+    Обробка додавання нового фільму через форму.
     """
     if request.method == 'POST':
-        form = MovieForm(request.POST, request.FILES)
+        # Обробка даних форми
+        form = MovieForm(request.POST)
         if form.is_valid():
-            form.save()  # Зберігаємо новий фільм в базу даних
-            return JsonResponse({"success": True}, status=200)
-        else:
-            return JsonResponse({"success": False, "errors": form.errors}, status=400)
+            form.save()
+            # Після успішного збереження перенаправляємо на головну сторінку
+            return redirect('')  # Перенаправляємо на сторінку movies
     else:
         form = MovieForm()
 
     return render(request, 'movies/main.html', {'form': form})
-
 
 
 class PublicMovieView(APIView):
@@ -67,7 +72,7 @@ class AdminMovieView(APIView):
             serializer = MovieSerializer(movie)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
-        # Отримати список усіх фільмів
+            # Отримати список усіх фільмів
             movies = Movie.objects.all()
             serializer = MovieSerializer(movies, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)

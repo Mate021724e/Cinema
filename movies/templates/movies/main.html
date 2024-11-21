@@ -211,6 +211,53 @@
           }
         });
       });
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('add-movie-form');
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault(); // запобігаємо стандартному відправленню форми
+    
+            const formData = new FormData(form);
+    
+            try {
+                const response = await fetch('/api/admin/movies/', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken') // передача CSRF токену
+                    }
+                });
+    
+                if (response.ok) {
+                    window.location.reload();
+                    alert("Фільм успішно додано!");
+                    modal.style.display = 'none'; 
+                    // Тут можна додати код для оновлення списку фільмів
+                } else {
+                    const errorText = await response.text();
+                    alert("Помилка: " + errorText);
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+                
+            }
+        });
+    
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.startsWith(name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    });
     </script>
   </body>
 </html>
