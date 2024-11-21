@@ -8,6 +8,7 @@ def get_all_movies():
         movies_info = []
         for movie in movies:
             movie_data = {
+                'Id': movie.id,
                 'Title': movie.title,
                 'Description': movie.description,
                 'Poster': movie.poster,

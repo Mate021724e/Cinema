@@ -2,17 +2,43 @@ from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404, render
-from movies.utils.movies import get_all_movies
-from .models import Movie
+from movies.utils.movies import get_all_movies 
+from movies.utils.genres import get_all_genres
+from .models import Movie, Genre, Category
 from .serializers import MovieSerializer
+from .forms import MovieForm
 
 def movies(request):
     """
     Головна сторінка з фільмами. Тільки GET.
     """
     movies_info = get_all_movies()
-    return render(request, 'movies/main.html', {'movies': movies_info})
-    
+    genres = Genre.objects.all()
+    categories = Category.objects.all()
+    return render(request, 'movies/main.html', 
+    {
+        'movies': movies_info,
+        'genres': genres,
+        'categories': categories
+        })
+
+def add_movie(request):
+    """
+    Додати новий фільм через форму в модальному вікні (AJAX).
+    """
+    if request.method == 'POST':
+        form = MovieForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()  # Зберігаємо новий фільм в базу даних
+            return JsonResponse({"success": True}, status=200)
+        else:
+            return JsonResponse({"success": False, "errors": form.errors}, status=400)
+    else:
+        form = MovieForm()
+
+    return render(request, 'movies/main.html', {'form': form})
+
+
 
 class PublicMovieView(APIView):
     """
