@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from movies.models import Movie  
+from movies.models import Movie, Genre  
 
 class Command(BaseCommand):
     help = 'Вивести всі фільми'
@@ -23,3 +23,4 @@ class Command(BaseCommand):
                 self.stdout.write('---')
         else:
             self.stdout.write("No movies found.")
+
